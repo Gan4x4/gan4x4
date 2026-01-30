@@ -1,0 +1,127 @@
+p, li {
+  line-height: 25px; }
+
+body {
+  font-family: Arial,sans-serif;
+  font-size: 16px;
+  padding-top: 55px;
+  /* fixed top */
+  background-image: url("../design/bg.png");
+  background-attachment: fixed; }
+
+.main {
+  padding: 10px;
+  background-color: white; }
+
+.project ul {
+  list-style-type: none; }
+
+h1, h2 {
+  /*
+        color: black;
+        */ }
+
+h3 {
+  display: inline-block; }
+
+section {
+  padding: 10px 0px; }
+
+.project {
+  background-color: white;
+  font-size: 14px;
+  padding: 10px;
+  /*        
+        border-radius: 10px;
+  */ }
+
+.video {
+    background-color: white;
+    font-size: 14px;
+    padding: 10px;
+    }
+  
+
+.intro-text p {
+  font-size: 16px;
+  font-weight: 500;
+  /*
+        color: whitesmoke;
+*/ }
+
+td:first-child {
+  min-width: 110px; }
+
+.space {
+  padding: 25px; }
+
+.img-lg {
+  max-width: 400px; }
+
+.img-md {
+  max-width: 200px; }
+
+.img-sm {
+  max-width: 80px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: inline-block; }
+
+.valign-middle {
+  display: inline-block;
+  vertical-align: bottom;
+  float: none; }
+
+.project-title {
+  display: inline-block;
+  padding: 10px;
+  background-color: dimgray; }
+
+a:hover.project-title {
+  color: white; }
+
+.years {
+  display: inline-block;
+  /*
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        background-color: red;
+            */
+  font-size: 14px;
+  padding-left: 10px;
+  position: relative;
+  bottom: -12px; }
+
+.part {
+  margin: 5px 0px;
+  display: inline-block;
+  background: lightgoldenrodyellow;
+  background: linear-gradient(to bottom, lightgoldenrodyellow, white);
+  border-top: #f7ecb5 solid 2px; }
+
+/*
+    .row:not(:last-child) {
+        border-bottom: 10px solid darkgray;
+    }
+*/
+.red {
+  color: red; }
+
+.orange {
+  color: orange; }
+
+.green {
+  color: greenyellow; }
+
+.blue {
+  color: lightskyblue; }
+
+.brown {
+  color: chocolate; }
+
+a .yellow {
+  color: maroon; }
+
+.project-title.yellow {
+  background-color: gold;
+  color: maroon; }
