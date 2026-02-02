@@ -1,8 +1,10 @@
   
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark mb-4 ">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark mb-4" aria-label="Primary">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ route('home')}}">Gan4x4</a>
-        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button> 
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">       
 
@@ -21,18 +23,18 @@
 
             </ul>
             
-        </div>    
-        <div class="" >
+        </div>
+        <div class="navbar-social">
             
             <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
                 <li class="nav-item col-6 col-md-auto">
-                    <a href="https://stackoverflow.com/users/6656081"  class='nav-link' alt="Stack overflow">
+                    <a href="https://stackoverflow.com/users/6656081" class='nav-link' aria-label="Stack Overflow">
                         <i class="fa fa-stack-overflow " aria-hidden="true"></i>
                     </a>
                 </li>
                 
                 <li class="nav-item col-6 col-md-auto">
-                    <a href="https://github.com/Gan4x4/" class='nav-link p-2' alt="Github">
+                    <a href="https://github.com/Gan4x4/" class='nav-link p-2' aria-label="GitHub">
                         <i class="fa fa-github " aria-hidden="true"></i>
                     </a>  
                 </li>
@@ -44,10 +46,6 @@
             </ul>
                 
         </div>
-            
-     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>       
         
   </div>
 </nav>

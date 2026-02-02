@@ -3,32 +3,29 @@
 @section('content')
 
 
- 
         <div class="container-fluid">
-            <div class="row pt-3 ">
-                <div class="col-md-12 project rounded-top p-3">
+            <div class="row pt-3">
+                <section class="col-md-12 profile-card">
                     @if (app()->getLocale() == 'ru')
                         @include('home.ru')
-
                     @else
                         @include('home.en')
                     @endif
-                </div>   
-        
-            </div>    <!-- row -->   
+                </section>   
+            </div>
             
             <div class="row intro-text">
-                <ul class="nav">
+                <ul class="nav profile-links">
                     <li class='nav-item'>
-                        <a href="https://stackoverflow.com/users/6656081"  class='nav-link'>
+                        <a href="https://stackoverflow.com/users/6656081" class='nav-link'>
                             <i class="fa fa-stack-overflow fa-2x" aria-hidden="true"></i>
-                            Stack overflow
+                            Stack Overflow
                         </a>
                     </li>
                     <li class='nav-item'>
                         <a href="https://github.com/Gan4x4/" class='nav-link'>
                             <i class="fa fa-github fa-2x" aria-hidden="true"></i>
-                            Github
+                            GitHub
                         </a>
                     </li>  
                     <li class='nav-item'>
@@ -38,28 +35,33 @@
                         </a>                        
                     </li>  
                     <li class='nav-item'>
-                        <!--
-                        <img class="h-25 object-fit-cover" src ="https://istina.msu.ru/static/base/img/logo-msu-150x148.png">
-                        -->
                         <a href="https://istina.msu.ru/workers/393403986/" class='nav-link' >
                             Istina
                         </a>                        
                     </li>  
-                    <!--
-                    <li class='nav-item'>
-                        <a href="https://packagist.org/packages/gan4x4/" title="packagist" class='nav-link'>
-                            <i class="fa fa-php fa-2x" aria-hidden="true"></i>
-                            <i class="fa-brands fa-php"></i>
-                            Packagist
-                        </a>
-                    </li>
-                    -->
                 </ul>
             </div>
-
-       
         </div>
  
 
 
+@endsection
+
+@section('structured_data')
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "@lang('title')",
+  "jobTitle": "@lang('description')",
+  "url": "{{ url('/') }}",
+  "image": "{{ asset('design/anton.jpg') }}",
+  "sameAs": [
+    "https://stackoverflow.com/users/6656081",
+    "https://github.com/Gan4x4/",
+    "https://bitbucket.org/Gan4x4/",
+    "https://istina.msu.ru/workers/393403986/"
+  ]
+}
+</script>
 @endsection

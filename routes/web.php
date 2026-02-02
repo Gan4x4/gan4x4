@@ -1,5 +1,14 @@
 <?php
 
+use App\Http\Controllers\ExperienceController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\VideoController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
+use App\Http\Controllers\Admin\ExperienceController as AdminExperienceController;
+use App\Http\Controllers\Admin\VideoController as AdminVideoController;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,7 +53,12 @@ Route::resource('video',VideoController::class)->only(['index'])->names([
     
 ]);
 
-Route::resource('admin/projects',ProjectController::class)->only(['edit','update']);
+Route::prefix('admin')->middleware('htpasswd')->group(function () {
+    Route::get('/', [AdminController::class, 'index'])->name('admin.index');
+    Route::resource('projects', AdminProjectController::class)->names('admin.projects');
+    Route::resource('experiences', AdminExperienceController::class)->names('admin.experiences');
+    Route::resource('videos', AdminVideoController::class)->names('admin.videos');
+});
 /*
 Route::prefix('admin')->group(function () {
     Route::get('/', function () {
@@ -75,4 +89,3 @@ Route::get('/ru', function () {
     session()->put('locale', 'ru');
     return redirect()->back();
 })->name('ru');
-

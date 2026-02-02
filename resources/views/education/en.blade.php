@@ -2,6 +2,8 @@
 
 @section('content')
 
+    <div class="container">
+    <h1 class="page-title">{{ __('menu.education') }}</h1>
     <table  class="table project">
     
         <tr>
@@ -13,12 +15,12 @@
                 2000 - 2003
             </td>
             <td>
-                <b style="text-transform: capitalize;" > State Aviation Technological University, Moscow</b>
+                <b style="text-transform: capitalize;" >State Aviation Technological University, Moscow</b>
                 <br>
                 <p>
-                   PhD (not finished)
+                   PhD program (not completed)
                 <br>
-                    Postgraduate education: “Development and research of methods for designing and programming multi-agent systems.” 
+                    Dissertation topic: “Development and research of methods for designing and programming multi-agent systems.” 
                 </p>
             </td>
         </tr>        
@@ -33,9 +35,10 @@
                 1998 - 2000
             </td>
             <td>                
-                <b style="text-transform: capitalize;" > State Aviation Technological University, Moscow</b>
+                <b style="text-transform: capitalize;" >State Aviation Technological University, Moscow</b>
                 <p>
-                    Master's degree <i class="fa fa-star"></i><i style="color:red"> (with honors)</i> <br>in "The automated systems of processing the information and management" (Computer science).
+                    Master's degree <i class="fa fa-star"></i><i style="color:red"> (with honors)</i>
+                    <br>in “Automated information processing and management systems” (Computer science).
                 </p>
             </td>
         </tr>        
@@ -49,13 +52,14 @@
                 1994 - 1998
             </td>
             <td>                
-                <b style="text-transform: capitalize;" > State Aviation Technological University, Moscow</b>
+                <b style="text-transform: capitalize;" >State Aviation Technological University, Moscow</b>
                 <p>
-                    Bachelor's  degree <br> in "Techniques and technologies" (Computer science).
+                    Bachelor's degree <br>in “Techniques and technologies” (Computer science).
                 </p>
             </td>
         </tr>        
     
     </table>    
+    </div>
     
 @endsection

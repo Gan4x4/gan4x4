@@ -7,6 +7,18 @@ use Lang;
 
 class Project extends EnhancedModel
 {
+    protected $fillable = [
+        'name_en',
+        'name_ru',
+        'description_en',
+        'description_ru',
+        'start',
+        'end',
+        'url',
+        'logo',
+        'links',
+        'skill',
+    ];
     
     protected $casts = [
         'links' => 'array',
@@ -14,6 +26,9 @@ class Project extends EnhancedModel
     
     public function getSkillAttribute($value)
     {                
+        if (empty($value)) {
+            return [];
+        }
         $words = [];    
         $delim = "\n\t,;";
         $tok =  strtok($value,$delim);      
@@ -33,11 +48,14 @@ class Project extends EnhancedModel
     
     public function getLinksAttribute($raw_links){
         
-        if ($raw_links === Null){
+        if (empty($raw_links)){
             return [];
         }
         
         $arr = json_decode($raw_links);
+        if (!is_array($arr)) {
+            return [];
+        }
         $out = [];
         foreach ( $arr as $link){
             $obj = (object)["url"=>Null,"description"=>Null];

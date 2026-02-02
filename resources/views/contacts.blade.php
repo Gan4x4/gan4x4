@@ -5,11 +5,12 @@
 
 
     <div class="container-fluid">
+        <h1 class="page-title">{{ __('menu.contacts') }}</h1>
         <div class="intro-text">
             <p class="table project">
-                tel: +7 (495) 979-47-89, +7 (901) 519-47-89
+                Tel: +7 (495) 979-47-89, +7 (901) 519-47-89
                 <br>
-                telegram: @anton_ganichev
+                Telegram: @anton_ganichev
             </p>
         </div>
     </div>
