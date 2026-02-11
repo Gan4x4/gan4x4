@@ -18,19 +18,19 @@
                 <ul class="nav profile-links">
                     <li class='nav-item'>
                         <a href="https://stackoverflow.com/users/6656081" class='nav-link'>
-                            <i class="fa fa-stack-overflow fa-2x" aria-hidden="true"></i>
+                            <i class="fa-brands fa-stack-overflow fa-2x" aria-hidden="true"></i>
                             Stack Overflow
                         </a>
                     </li>
                     <li class='nav-item'>
                         <a href="https://github.com/Gan4x4/" class='nav-link'>
-                            <i class="fa fa-github fa-2x" aria-hidden="true"></i>
+                            <i class="fa-brands fa-github fa-2x" aria-hidden="true"></i>
                             GitHub
                         </a>
                     </li>  
                     <li class='nav-item'>
                         <a href="https://bitbucket.org/Gan4x4/" class='nav-link' >
-                            <i class="fa fa-bitbucket fa-2x" aria-hidden="true"></i>
+                            <i class="fa-brands fa-bitbucket fa-2x" aria-hidden="true"></i>
                             Bitbucket
                         </a>                        
                     </li>  

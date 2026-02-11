@@ -3,64 +3,78 @@
  
         <img class="rounded float-start me-4 profile-photo" src="design/anton.jpg" alt="Photo of Ganichev Anton Alexandrovich.">
               
-        <h1 class="name">Ganichev Anton Alexandrovich</h1>
-        <h2 class="subtitle">Computer Vision Engineer · Software Developer</h2>
+        <h1 class="name">Anton Ganichev</h1>
+        <h2 class="subtitle">Computer Vision Engineer &amp; AI Consultant · Generative AI (Image/Video) · Instructor</h2>
         <hr>
  
         <p>
-            Computer vision engineer at MIEM; lecturer at HSE and MSU.
-            Developed video analytics solutions for the Moscow Department of Information Technologies.
-            Technical co-founder of the FindMyBike anti-theft service.
-            Founder of 4x4 Tourism.
-            Contributed to the MicroWorlds JR (PervoLogo) educational platform.
-            Honors graduate in Information Technology from Moscow Aviation Technological University.
-            <a href="{{ route('experience') }}">More than 20 years</a> of software development experience.
+            I do research and prototyping in computer vision and generative models for images and video.
+            I help research and engineering teams apply AI in practice,
+            combining hands-on implementation with mentoring and knowledge transfer.
+            My recent focus is conditional generation and diffusion-based image/video editing.
+            <br>
+            <br>
+            <a href="{{ route('experience') }}">26+ years in IT / software development.</a>
         </p>
+        <div class="clearfix"></div>
 
-        <h6>Research Focus:</h6>
+        <h5>What I deliver</h5>
 
         <ul>
             <li>
-                Real-time video stream processing
+                Hands-on prototypes/baselines (notebooks/scripts) for CV and generative workflows, built for reproducible iteration
             </li>
             <li>
-                Object detection and tracking systems
+                Method and architecture reviews: selecting viable approaches, clarifying assumptions/risks, defining an experiment roadmap
             </li>
             <li>
-                Open-vocabulary detection and segmentation
-            </li>
-            <li>
-                Production deployment (Docker, ONNX, gRPC)
+                Mentoring and technical guidance: deep learning for scientific research (PhD-level, cross-domain) + project guidance for interns/juniors (code + experiment reviews)
             </li>
         </ul>
         
-        <h6>Core Technical Stack:</h6>
-        <p>  
-        <span text-center><b>Python · PyTorch · NumPy · OpenCV · Linux · Git · Docker · gRPC</b></span>
-        </p>
+        <h5>Primary focus</h5>
+        <ul>  
+            <li>
+                Controllable generation & editing (diffusion-based): spatial/reference conditioning; img2img/inpainting/inversion workflows
+            </li>
+            <li>
+                Video CV: detection + tracking pipelines, evaluation pitfalls, and practical integration patterns
+            </li>
+            <li>
+                Segmentation & multi-task learning: modern architectures, losses, mask processing, dataset/annotation nuances
+            </li>
+        </ul>
         
         
-        <h6>Additional Competencies:</h6>
+        <h5>Background (familiar topics)</h5>
             
            
         <ul>
             <li>  
-                Full-stack web development (PHP/Laravel, REST APIs) for rapid prototyping
+                Deployment basics (Docker; general awareness of ONNX/TensorRT)
             </li>
 
             <li>
-                Native development (C++/STL, Java/Android)
+                LoRA / parameter-efficient tuning (conceptual + practical exposure)
+            </li>
+            <li>
+                Depth estimation, VLM-based anomaly detection, data unlearning (study-level)
             </li>
         </ul>
 
         <p class="note">    
-        Professional reading in English; intermediate speaking (B2).
+            <b>Primary tools</b>: Python · PyTorch · Linux · Git · Docker · OpenCV · torchvision · Transformers · Diffusers · Hydra
+        <br>
+                <b>Used as needed</b>: Ultralytics YOLO · Stable Diffusion / Flux · ControlNet · ComfyUI · CLIP
         </p>    
+
         
-        <h6>Professional Availability:</h6>
+
+        
+        <h5>Work format</h5>
         <p >
-            Open to roles with international teams working on ethical computer vision
-            applications in video analytics or medical imaging.
-            Available for remote and contract work. References on request.
+            Remote · contract / consulting · training / curriculum development.
+            English: B2 (Upper-Intermediate), spoken.
+            Contact: gan4x4@gmail.com.
         </p>
     

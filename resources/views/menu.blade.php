@@ -29,13 +29,13 @@
             <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
                 <li class="nav-item col-6 col-md-auto">
                     <a href="https://stackoverflow.com/users/6656081" class='nav-link' aria-label="Stack Overflow">
-                        <i class="fa fa-stack-overflow " aria-hidden="true"></i>
+                        <i class="fa-brands fa-stack-overflow" aria-hidden="true"></i>
                     </a>
                 </li>
                 
                 <li class="nav-item col-6 col-md-auto">
                     <a href="https://github.com/Gan4x4/" class='nav-link p-2' aria-label="GitHub">
-                        <i class="fa fa-github " aria-hidden="true"></i>
+                        <i class="fa-brands fa-github" aria-hidden="true"></i>
                     </a>  
                 </li>
                 

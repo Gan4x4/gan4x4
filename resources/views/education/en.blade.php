@@ -37,7 +37,7 @@
             <td>                
                 <b style="text-transform: capitalize;" >State Aviation Technological University, Moscow</b>
                 <p>
-                    Master's degree <i class="fa fa-star"></i><i style="color:red"> (with honors)</i>
+                    Master's degree <i class="fa-solid fa-star"></i><i style="color:red"> (with honors)</i>
                     <br>in “Automated information processing and management systems” (Computer science).
                 </p>
             </td>

@@ -15,9 +15,9 @@
 }
 
 body {
-  font-family: "Source Sans 3", "Segoe UI", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
-  padding-top: 70px;
+  padding-top: 60px;
   color: var(--ink);
   background:
     radial-gradient(1200px 600px at 10% -10%, rgba(240, 180, 41, 0.18), transparent 60%),
@@ -27,7 +27,7 @@ body {
 }
 
 .site-main {
-  padding: 24px 0 48px;
+  padding: 12px 0 48px;
 }
 
 p, li {
@@ -50,7 +50,7 @@ a:hover {
 }
 
 .navbar-brand {
-  font-family: "Fraunces", "Source Sans 3", serif;
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Times New Roman", serif;
   font-weight: 700;
   letter-spacing: 0.4px;
 }
@@ -83,7 +83,7 @@ a:hover {
 }
 
 .name {
-  font-family: "Fraunces", "Source Sans 3", serif;
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Times New Roman", serif;
   font-size: clamp(2rem, 3vw, 2.6rem);
   margin-top: 4px;
 }
@@ -100,7 +100,7 @@ a:hover {
 }
 
 .page-title {
-  font-family: "Fraunces", "Source Sans 3", serif;
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Times New Roman", serif;
   font-size: clamp(1.8rem, 2.5vw, 2.2rem);
   margin: 12px 0 24px;
 }
@@ -207,7 +207,7 @@ td:first-child {
 
 @media (max-width: 768px) {
   body {
-    padding-top: 64px;
+    padding-top: 56px;
   }
 
   .profile-photo {
