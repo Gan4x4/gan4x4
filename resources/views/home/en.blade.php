@@ -65,7 +65,7 @@
         <p class="note">    
             <b>Primary tools</b>: Python · PyTorch · Linux · Git · Docker · OpenCV · torchvision · Transformers · Diffusers · Hydra
         <br>
-                <b>Used as needed</b>: Ultralytics YOLO · Stable Diffusion / Flux · ControlNet · ComfyUI · CLIP
+            <b>Used as needed</b>: Ultralytics YOLO · Stable Diffusion / Flux · ControlNet · ComfyUI · CLIP
         </p>    
 
         
@@ -74,7 +74,9 @@
         <h5>Work format</h5>
         <p >
             Remote · contract / consulting · training / curriculum development.
+            <br>
             English: B2 (Upper-Intermediate), spoken.
+            <br>
             Contact: gan4x4@gmail.com.
         </p>
     
