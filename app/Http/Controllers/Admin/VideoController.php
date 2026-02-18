@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Concerns\StoresPublicImages;
 use App\Http\Controllers\Controller;
 use App\Experience;
 use App\Video;
@@ -9,6 +10,8 @@ use Illuminate\Http\Request;
 
 class VideoController extends Controller
 {
+    use StoresPublicImages;
+
     public function index()
     {
         $videos = Video::all()->sortByDesc('created_at');
@@ -60,6 +63,7 @@ class VideoController extends Controller
     {
         $request->validate([
             'experience_id' => 'nullable|integer|exists:experiences,id',
+            'image_file' => 'nullable|file|image|mimes:jpg,jpeg,png,gif,webp,bmp|max:5120',
         ]);
 
         $fields = [
@@ -77,6 +81,15 @@ class VideoController extends Controller
 
         if (array_key_exists('experience_id', $data) && $data['experience_id'] === '') {
             $data['experience_id'] = null;
+        }
+
+        if ($request->hasFile('image_file')) {
+            $previousImage = (string) ($request->route('video')?->getAttributes()['image'] ?? '');
+            $nameHint = (string) ($data['name_en'] ?? $data['name_ru'] ?? '');
+            $data['image'] = $this->storePublicImage($request->file('image_file'), 'video', 'video-cover', $nameHint);
+            if ($previousImage !== '' && $previousImage !== $data['image']) {
+                $this->removePublicImageIfExists($previousImage, 'video');
+            }
         }
 
         return $data;

@@ -76,7 +76,12 @@ class ExperienceController extends Controller
         }
 
         if ($request->hasFile('logo_file')) {
-            $data['logo'] = $this->storePublicImage($request->file('logo_file'), 'design/work', 'work-logo');
+            $previousLogo = $experience?->getAttributes()['logo'] ?? '';
+            $nameHint = (string) ($data['name_en'] ?? $data['name_ru'] ?? '');
+            $data['logo'] = $this->storePublicImage($request->file('logo_file'), 'work', 'work-logo', $nameHint);
+            if ($previousLogo !== '' && $previousLogo !== $data['logo']) {
+                $this->removePublicImageIfExists($previousLogo, 'work');
+            }
         } else {
             $data['logo'] = (string) ($experience?->getAttributes()['logo'] ?? '');
         }

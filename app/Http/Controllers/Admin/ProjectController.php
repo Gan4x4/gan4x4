@@ -35,7 +35,7 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $project = new Project();
-        $project->fill($this->payload($request));
+        $project->fill($this->payload($request, $project));
         $project->save();
 
         return redirect()->route('admin.projects.edit', [$project->id]);
@@ -52,7 +52,7 @@ class ProjectController extends Controller
 
     public function update(Request $request, Project $project)
     {
-        $project->fill($this->payload($request));
+        $project->fill($this->payload($request, $project));
         $project->save();
 
         return redirect()->route('admin.projects.edit', [$project->id]);
@@ -64,7 +64,7 @@ class ProjectController extends Controller
         return redirect()->route('admin.projects.index');
     }
 
-    private function payload(Request $request): array
+    private function payload(Request $request, ?Project $project = null): array
     {
         $request->validate([
             'experience_id' => 'nullable|integer|exists:experiences,id',
@@ -87,7 +87,12 @@ class ProjectController extends Controller
             $request->validate([
                 'logo_file' => 'file|image|mimes:jpg,jpeg,png,gif,webp,bmp|max:5120',
             ]);
-            $data['logo'] = $this->storePublicImage($request->file('logo_file'), 'design/projects', 'project-logo');
+            $previousLogo = $project?->getAttributes()['logo'] ?? '';
+            $nameHint = (string) ($data['name_en'] ?? $data['name_ru'] ?? '');
+            $data['logo'] = $this->storePublicImage($request->file('logo_file'), 'projects', 'project-logo', $nameHint);
+            if ($previousLogo !== '' && $previousLogo !== $data['logo']) {
+                $this->removePublicImageIfExists($previousLogo, 'projects');
+            }
         }
 
         return $data;

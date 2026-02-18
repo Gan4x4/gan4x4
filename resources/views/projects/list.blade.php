@@ -10,7 +10,7 @@
                 <div class="col"> 
                     <div class="float-start text-center pe-4 project-years">
                         <a href="{{  $p->url ? $p->url : "#" }}" target="_blank">
-                            <img class="img-sm" src="design/projects/{{ $p->logo }}" alt="{{ $p->name }}">
+                            <img class="img-sm" src="{{ $p->logo_url }}" alt="{{ $p->name }}">
                         </a>
                         <br>
                         {{ $p->start }}

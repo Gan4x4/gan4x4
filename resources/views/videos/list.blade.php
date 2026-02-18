@@ -10,7 +10,7 @@
                 <div class="col"> 
                     <div class="float-start text-center pe-3 ">
                         <a href="{{  $v->url ? $v->url : "#" }}" target="_blank">
-                            <img class="img-lg" src="design/video/{{ $v->image }}" alt="{{ $v->name }}">
+                            <img class="img-lg" src="{{ $v->image_url }}" alt="{{ $v->name }}">
                         </a>
                         <br>
                         

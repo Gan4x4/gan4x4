@@ -30,6 +30,11 @@ class Experience extends EnhancedModel
         return self::text2web($d);
     }
 
+    public function getLogoUrlAttribute()
+    {
+        return self::resolveDesignImageUrl('work', $this->logo ?? '');
+    }
+
     public function projects()
     {
         return $this->hasMany(Project::class)

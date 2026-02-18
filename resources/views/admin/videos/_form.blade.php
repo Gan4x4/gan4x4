@@ -31,6 +31,17 @@
 </div>
 
 <div class="form-group mb-3">
+    <label for="image_file">Upload preview image</label>
+    <input type="file" class="form-control" name="image_file" accept=".jpg,.jpeg,.png,.gif,.webp,.bmp" />
+    <small class="form-text text-muted">If uploaded, this image will replace "Image filename".</small>
+    @if (!empty($video->image))
+        <div class="mt-2">
+            <small class="text-muted">Current file: {{ $video->image }}</small>
+        </div>
+    @endif
+</div>
+
+<div class="form-group mb-3">
     <label for="code">Embed code</label>
     <input type="text" class="form-control" name="code" value="{{ old('code', $video->code ?? '') }}" />
 </div>

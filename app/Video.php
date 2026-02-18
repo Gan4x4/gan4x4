@@ -26,4 +26,9 @@ class Video extends EnhancedModel
     public function getDescriptionAttribute($d){
         return self::text2web($d);
     }
+
+    public function getImageUrlAttribute()
+    {
+        return self::resolveDesignImageUrl('video', $this->image ?? '');
+    }
 }

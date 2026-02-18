@@ -12,7 +12,7 @@
         </form>
     </div>
 
-    <form method="POST" action="{{ route('admin.videos.update', [$video->id]) }}">
+    <form method="POST" action="{{ route('admin.videos.update', [$video->id]) }}" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         @include('admin.videos._form')

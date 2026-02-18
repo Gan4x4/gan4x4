@@ -12,7 +12,7 @@
                     
                     @if ($e->logo)
                         <a href="{{ $e->url }}">
-                            <img class="img-sm" src="design/work/{{ $e->logo }}" alt="{{ $e->name }}">
+                            <img class="img-sm" src="{{ $e->logo_url }}" alt="{{ $e->name }}">
                         </a>
                         <br>
                     @endif

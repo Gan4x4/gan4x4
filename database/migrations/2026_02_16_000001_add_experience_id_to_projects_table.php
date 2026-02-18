@@ -11,11 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('projects', function (Blueprint $table) {
-            $table->foreignId('experience_id')
-                ->nullable()
-                ->constrained('experiences')
-                ->nullOnDelete();
+        $driver = Schema::getConnection()->getDriverName();
+        Schema::table('projects', function (Blueprint $table) use ($driver) {
+            if ($driver === 'sqlite') {
+                $table->unsignedBigInteger('experience_id')->nullable();
+            } else {
+                $table->foreignId('experience_id')
+                    ->nullable()
+                    ->constrained('experiences')
+                    ->nullOnDelete();
+            }
         });
     }
 
@@ -24,10 +29,12 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('projects', function (Blueprint $table) {
-            $table->dropForeign(['experience_id']);
+        $driver = Schema::getConnection()->getDriverName();
+        Schema::table('projects', function (Blueprint $table) use ($driver) {
+            if ($driver !== 'sqlite') {
+                $table->dropForeign(['experience_id']);
+            }
             $table->dropColumn('experience_id');
         });
     }
 };
-

@@ -13,6 +13,10 @@ class ChangeTextFieldsInExperiencesTable extends Migration
      */
     public function up()
     {
+        if (Schema::getConnection()->getDriverName() === 'sqlite') {
+            return;
+        }
+
         Schema::table('experiences', function (Blueprint $table) {
             $table->string('description_ru')->change();
             $table->string('description_en')->change();
@@ -28,6 +32,10 @@ class ChangeTextFieldsInExperiencesTable extends Migration
      */
     public function down()
     {
+        if (Schema::getConnection()->getDriverName() === 'sqlite') {
+            return;
+        }
+
         Schema::table('experiences', function (Blueprint $table) {
             $table->LongText('description_ru')->change();
             $table->LongText('description_en')->change();

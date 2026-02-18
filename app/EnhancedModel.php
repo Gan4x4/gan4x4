@@ -163,4 +163,20 @@ class EnhancedModel extends Model
         }, $text);
     }
 
+    protected static function resolveDesignImageUrl(string $section, ?string $filename): string
+    {
+        $filename = trim((string) $filename);
+        if ($filename === '') {
+            return '';
+        }
+
+        $section = trim($section, '/');
+        $storageRelative = 'design/' . $section . '/' . $filename;
+        if (is_file(storage_path('app/public/' . $storageRelative))) {
+            return asset('storage/' . $storageRelative);
+        }
+
+        return asset('design/' . $section . '/' . $filename);
+    }
+
 }

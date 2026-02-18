@@ -50,6 +50,11 @@ class Project extends EnhancedModel
     public function getDescriptionAttribute($d){
         return self::text2web($d);
     }
+
+    public function getLogoUrlAttribute()
+    {
+        return self::resolveDesignImageUrl('projects', $this->logo ?? '');
+    }
     
     
     public function getLinksAttribute($raw_links){
