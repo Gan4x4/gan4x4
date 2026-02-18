@@ -12,7 +12,7 @@
         </form>
     </div>
 
-    <form method="POST" action="{{ route('admin.projects.update', [$project->id]) }}">
+    <form method="POST" action="{{ route('admin.projects.update', [$project->id]) }}" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         @include('admin.projects._form')

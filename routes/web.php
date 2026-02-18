@@ -77,6 +77,34 @@ Route::get('/contacts', function () {
     return view('contacts');
 })->name('contacts');
 
+Route::get('/sitemap.xml', function () {
+    $urls = [
+        route('home'),
+        route('education'),
+        route('experience'),
+        route('projects'),
+        route('video'),
+        route('contacts'),
+    ];
+
+    $lastmod = now()->toDateString();
+    $xml = '<?xml version="1.0" encoding="UTF-8"?>';
+    $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+
+    foreach ($urls as $url) {
+        $xml .= '<url>';
+        $xml .= '<loc>' . e($url) . '</loc>';
+        $xml .= '<lastmod>' . $lastmod . '</lastmod>';
+        $xml .= '<changefreq>weekly</changefreq>';
+        $xml .= '<priority>0.8</priority>';
+        $xml .= '</url>';
+    }
+
+    $xml .= '</urlset>';
+
+    return response($xml, 200)->header('Content-Type', 'application/xml');
+})->name('sitemap');
+
 
 Route::get('/en', function () {
     App::setLocale('en');

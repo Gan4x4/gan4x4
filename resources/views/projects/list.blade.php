@@ -6,9 +6,9 @@
     <div class="container">
         <h1 class="page-title">{{ __('menu.projects') }}</h1>
         @foreach($projects as $p)
-            <article class="row project card-stack" itemscope itemtype="https://schema.org/CreativeWork">
+            <article id="project-{{ $p->id }}" class="row project card-stack" itemscope itemtype="https://schema.org/CreativeWork">
                 <div class="col"> 
-                    <div class="float-start text-center pe-3 project-years">
+                    <div class="float-start text-center pe-4 project-years">
                         <a href="{{  $p->url ? $p->url : "#" }}" target="_blank">
                             <img class="img-sm" src="design/projects/{{ $p->logo }}" alt="{{ $p->name }}">
                         </a>

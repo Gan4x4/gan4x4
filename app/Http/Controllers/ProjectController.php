@@ -14,7 +14,10 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $list = Project::all()->sortByDesc("start");
+        $list = Project::query()
+            ->orderByRaw('COALESCE("end", "start") DESC')
+            ->orderByDesc('start')
+            ->get();
        
         return view('projects.list')->with(['projects' => $list]);
     }

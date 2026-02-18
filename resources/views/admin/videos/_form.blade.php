@@ -9,6 +9,18 @@
 </div>
 
 <div class="form-group mb-3">
+    <label for="experience_id">Workplace (Experience)</label>
+    <select class="form-select" name="experience_id">
+        <option value="">Not linked</option>
+        @foreach(($experiences ?? collect()) as $experience)
+            <option value="{{ $experience->id }}" {{ (string)old('experience_id', $video->experience_id ?? '') === (string)$experience->id ? 'selected' : '' }}>
+                {{ $experience->start }} @if ($experience->start != $experience->end) - {{ $experience->end ?? 'н.в.' }} @endif · {{ $experience->position }} · {{ $experience->name }}
+            </option>
+        @endforeach
+    </select>
+</div>
+
+<div class="form-group mb-3">
     <label for="url">URL</label>
     <input type="text" class="form-control" name="url" value="{{ old('url', $video->url ?? '') }}" />
 </div>
@@ -26,9 +38,11 @@
 <div class="form-group mb-3">
     <label for="description_en">Description (EN)</label>
     <textarea class="form-control" name="description_en" rows="6">{{ old('description_en', $video->getAttributes()['description_en'] ?? '') }}</textarea>
+    <small class="form-text text-muted">Use Markdown. Raw HTML is not rendered.</small>
 </div>
 
 <div class="form-group mb-3">
     <label for="description_ru">Description (RU)</label>
     <textarea class="form-control" name="description_ru" rows="6">{{ old('description_ru', $video->getAttributes()['description_ru'] ?? '') }}</textarea>
+    <small class="form-text text-muted">Use Markdown. Raw HTML is not rendered.</small>
 </div>

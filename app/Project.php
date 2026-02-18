@@ -16,6 +16,7 @@ class Project extends EnhancedModel
         'end',
         'url',
         'logo',
+        'experience_id',
         'links',
         'skill',
     ];
@@ -23,6 +24,11 @@ class Project extends EnhancedModel
     protected $casts = [
         'links' => 'array',
     ];
+
+    public function experience()
+    {
+        return $this->belongsTo(Experience::class);
+    }
     
     public function getSkillAttribute($value)
     {                

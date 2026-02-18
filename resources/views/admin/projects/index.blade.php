@@ -14,7 +14,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Name (EN)</th>
-                    <th>Name (RU)</th>
+                    <th>Workplace</th>
                     <th>Years</th>
                     <th></th>
                 </tr>
@@ -24,7 +24,7 @@
                     <tr>
                         <td>{{ $project->id }}</td>
                         <td>{{ $project->getAttributes()['name_en'] ?? '' }}</td>
-                        <td>{{ $project->getAttributes()['name_ru'] ?? '' }}</td>
+                        <td>{{ $project->experience ? $project->experience->name : 'Not linked' }}</td>
                         <td>{{ $project->start }} @if ($project->start != $project->end) - {{ $project->end ?? 'н.в.' }} @endif</td>
                         <td class="text-end">
                             <a href="{{ route('admin.projects.edit', [$project->id]) }}">Edit</a>

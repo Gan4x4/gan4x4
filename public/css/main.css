@@ -34,13 +34,15 @@ p, li {
   line-height: 1.6;
 }
 
-a {
-  color: var(--ink-soft);
-  text-decoration: none;
+a[href] {
+  color: #76adff;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-weight: 400;
 }
 
-a:hover {
-  color: var(--accent-2);
+a[href]:hover {
+  color: #4f95ff;
 }
 
 .navbar {
@@ -140,7 +142,6 @@ a:hover {
 .project-links a {
   display: inline-block;
   margin-right: 12px;
-  font-weight: 600;
 }
 
 .position-title {

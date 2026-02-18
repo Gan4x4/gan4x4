@@ -4,7 +4,7 @@
 
 <div class="container">
     <h1 class="page-title">Add experience</h1>
-    <form method="POST" action="{{ route('admin.experiences.store') }}">
+    <form method="POST" action="{{ route('admin.experiences.store') }}" enctype="multipart/form-data">
         @csrf
         @include('admin.experiences._form')
         <button type="submit" class="btn btn-primary">Create</button>

@@ -34,26 +34,36 @@
 </div>
 
 <div class="form-group mb-3">
-    <label for="logo">Logo filename</label>
-    <input type="text" class="form-control" name="logo" value="{{ old('logo', $experience->logo ?? '') }}" />
+    <label for="logo_file">Logo image</label>
+    <input type="file" class="form-control" name="logo_file" accept=".jpg,.jpeg,.png,.gif,.webp,.bmp" />
+    <small class="form-text text-muted">Upload logo image file. Manual filename entry is disabled.</small>
+    @if (!empty($experience->logo))
+        <div class="mt-2">
+            <small class="text-muted">Current file: {{ $experience->logo }}</small>
+        </div>
+    @endif
 </div>
 
 <div class="form-group mb-3">
     <label for="description_en">Description (EN)</label>
     <textarea class="form-control" name="description_en" rows="4">{{ old('description_en', $experience->getAttributes()['description_en'] ?? '') }}</textarea>
+    <small class="form-text text-muted">Use Markdown. Raw HTML is not rendered.</small>
 </div>
 
 <div class="form-group mb-3">
     <label for="description_ru">Description (RU)</label>
     <textarea class="form-control" name="description_ru" rows="4">{{ old('description_ru', $experience->getAttributes()['description_ru'] ?? '') }}</textarea>
+    <small class="form-text text-muted">Use Markdown. Raw HTML is not rendered.</small>
 </div>
 
 <div class="form-group mb-3">
     <label for="duties_en">Duties (EN)</label>
     <textarea class="form-control" name="duties_en" rows="6">{{ old('duties_en', $experience->getAttributes()['duties_en'] ?? '') }}</textarea>
+    <small class="form-text text-muted">Use Markdown. Raw HTML is not rendered.</small>
 </div>
 
 <div class="form-group mb-3">
     <label for="duties_ru">Duties (RU)</label>
     <textarea class="form-control" name="duties_ru" rows="6">{{ old('duties_ru', $experience->getAttributes()['duties_ru'] ?? '') }}</textarea>
+    <small class="form-text text-muted">Use Markdown. Raw HTML is not rendered.</small>
 </div>

@@ -9,6 +9,9 @@
 
 define('LARAVEL_START', microtime(true));
 
+// Keep generated cache/compiled files group-writable for shared deploy users.
+umask(0002);
+
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader

@@ -15,5 +15,15 @@ class Video extends EnhancedModel
         'url',
         'image',
         'code',
+        'experience_id',
     ];
+
+    public function experience()
+    {
+        return $this->belongsTo(Experience::class);
+    }
+
+    public function getDescriptionAttribute($d){
+        return self::text2web($d);
+    }
 }

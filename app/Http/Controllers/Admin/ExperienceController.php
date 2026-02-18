@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Concerns\StoresPublicImages;
 use App\Http\Controllers\Controller;
 use App\Experience;
 use Illuminate\Http\Request;
 
 class ExperienceController extends Controller
 {
+    use StoresPublicImages;
+
     public function index()
     {
         $experiences = Experience::all()->sortByDesc('start');
@@ -22,7 +25,7 @@ class ExperienceController extends Controller
     public function store(Request $request)
     {
         $experience = new Experience();
-        $experience->fill($this->payload($request));
+        $experience->fill($this->withRequiredDefaults($this->payload($request)));
         $experience->save();
 
         return redirect()->route('admin.experiences.edit', [$experience->id]);
@@ -35,7 +38,7 @@ class ExperienceController extends Controller
 
     public function update(Request $request, Experience $experience)
     {
-        $experience->fill($this->payload($request));
+        $experience->fill($this->withRequiredDefaults($this->payload($request, $experience), $experience));
         $experience->save();
 
         return redirect()->route('admin.experiences.edit', [$experience->id]);
@@ -47,14 +50,67 @@ class ExperienceController extends Controller
         return redirect()->route('admin.experiences.index');
     }
 
-    private function payload(Request $request): array
+    private function payload(Request $request, ?Experience $experience = null): array
     {
-        return $request->only([
+        $request->validate([
+            'start' => 'required|date',
+            'logo_file' => 'nullable|file|image|mimes:jpg,jpeg,png,gif,webp,bmp|max:5120',
+        ]);
+
+        $fields = [
             'name_en', 'name_ru',
             'description_en', 'description_ru',
             'position_en', 'position_ru',
             'duties_en', 'duties_ru',
-            'start', 'end', 'url', 'logo',
-        ]);
+            'start', 'end', 'url',
+        ];
+        $input = $request->all();
+        $data = [];
+        foreach ($fields as $field) {
+            if (array_key_exists($field, $input)) {
+                $data[$field] = $input[$field];
+            }
+        }
+        if (array_key_exists('end', $data) && $data['end'] === '') {
+            $data['end'] = null;
+        }
+
+        if ($request->hasFile('logo_file')) {
+            $data['logo'] = $this->storePublicImage($request->file('logo_file'), 'design/work', 'work-logo');
+        } else {
+            $data['logo'] = (string) ($experience?->getAttributes()['logo'] ?? '');
+        }
+
+        return $data;
+    }
+
+    private function withRequiredDefaults(array $data, ?Experience $experience = null): array
+    {
+        $required = [
+            'name_en',
+            'name_ru',
+            'description_en',
+            'description_ru',
+            'position_en',
+            'position_ru',
+            'duties_en',
+            'duties_ru',
+            'url',
+            'logo',
+        ];
+
+        foreach ($required as $field) {
+            if (array_key_exists($field, $data) && $data[$field] !== null) {
+                continue;
+            }
+
+            if ($experience) {
+                $data[$field] = (string) ($experience->getAttributes()[$field] ?? '');
+            } else {
+                $data[$field] = '';
+            }
+        }
+
+        return $data;
     }
 }

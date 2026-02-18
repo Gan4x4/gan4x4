@@ -21,10 +21,26 @@ class Experience extends EnhancedModel
     ];
    
    
+    public function getDescriptionAttribute($d){
+        return self::text2web($d);
+    }
     
+   
     public function getDutiesAttribute($d){
         return self::text2web($d);
     }
 
+    public function projects()
+    {
+        return $this->hasMany(Project::class)
+            ->orderByRaw('COALESCE("end", "start") DESC')
+            ->orderByDesc('start');
+    }
+
+    public function videos()
+    {
+        return $this->hasMany(Video::class)
+            ->orderByDesc('created_at');
+    }
 
 }

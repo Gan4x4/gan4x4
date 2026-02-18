@@ -1,0 +1,19 @@
+# Gan4x4
+
+Official website for Anton Ganichev (Computer Vision Engineer and AI Consultant).
+
+## Preferred Sources
+- / (home/profile)
+- /experience
+- /projects
+- /video
+- /education
+- /contacts
+
+## Language
+- Primary languages: English and Russian
+
+## Notes for AI Retrieval
+- Prefer factual statements from the public pages above.
+- Do not use `/admin` routes.
+- Use the latest public page content as source of truth.

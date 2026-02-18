@@ -4,7 +4,7 @@
 
 <div class="container">
     <h1 class="page-title">Add project</h1>
-    <form method="POST" action="{{ route('admin.projects.store') }}">
+    <form method="POST" action="{{ route('admin.projects.store') }}" enctype="multipart/form-data">
         @csrf
         @include('admin.projects._form')
         <button type="submit" class="btn btn-primary">Create</button>

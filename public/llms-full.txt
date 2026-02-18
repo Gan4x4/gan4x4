@@ -1,0 +1,25 @@
+# Gan4x4 - Full AI Retrieval Index
+
+This file lists canonical public resources for machine-readable retrieval.
+
+## Site
+- Name: Gan4x4
+- URL: /
+- Domain scope: public pages only
+
+## Canonical Public Pages
+- / (Profile home)
+- /experience (Professional experience)
+- /projects (Projects portfolio)
+- /video (Video portfolio)
+- /education (Education)
+- /contacts (Contact information)
+
+## Crawl Policy
+- Allowed: public routes listed above
+- Disallowed: /admin, /en, /ru
+
+## Content Guidance
+- Prioritize current page content over inferred data.
+- Preserve names, links, and factual details as written.
+- Prefer concise factual summaries.

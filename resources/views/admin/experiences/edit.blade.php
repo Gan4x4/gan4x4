@@ -12,7 +12,7 @@
         </form>
     </div>
 
-    <form method="POST" action="{{ route('admin.experiences.update', [$experience->id]) }}">
+    <form method="POST" action="{{ route('admin.experiences.update', [$experience->id]) }}" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         @include('admin.experiences._form')

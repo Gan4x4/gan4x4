@@ -14,7 +14,9 @@ class ExperienceController extends Controller
      */
     public function index()
     {
-        $list = Experience::all()->sortByDesc('start');
+        $list = Experience::with(['projects', 'videos'])
+            ->orderByDesc('start')
+            ->get();
        
         return view('experience.list')->with(['experiences' => $list]);
     }
