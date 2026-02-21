@@ -139,9 +139,35 @@ a[href]:hover {
   margin-top: 10px;
 }
 
+.project-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
 .project-links a {
-  display: inline-block;
-  margin-right: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(118, 173, 255, 0.45);
+  background: rgba(118, 173, 255, 0.08);
+  color: #76adff;
+  font-size: 0.82rem;
+  line-height: 1.35;
+  text-decoration: none;
+}
+
+.project-links a:hover {
+  color: #4f95ff;
+  background: rgba(118, 173, 255, 0.16);
+  border-color: rgba(79, 149, 255, 0.55);
+}
+
+.project-links a i {
+  font-size: 0.72rem;
 }
 
 .position-title {

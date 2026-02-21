@@ -29,7 +29,13 @@
                         @if (is_array($p->links) && count($p->links) > 0) 
                             <div class="project-links">
                                 @foreach($p->links as $l)
-                                    <a href="{{ $l->url }}">{{ $l->description }}</a>
+                                    @php
+                                        $proofFullLabel = (string) ($l->description ?? $l->url);
+                                        $proofShortLabel = \Illuminate\Support\Str::words($proofFullLabel, 4, '…');
+                                    @endphp
+                                    <a href="{{ $l->url }}" title="{{ $proofFullLabel }}" aria-label="{{ $proofFullLabel }}">
+                                        <i class="fa-solid fa-link me-1" aria-hidden="true"></i>{{ $proofShortLabel }}
+                                    </a>
                                 @endforeach
                             </div>
                         @endif

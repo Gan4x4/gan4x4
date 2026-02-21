@@ -19,7 +19,7 @@
                     {{ $e->start }}
 
                     @if ($e->start != $e->end )
-                         - {{ $e->end ?? 'н.в.' }} 
+                         - {{ $e->end ?? __('present') }}
                     @endif
                 </td>
                 <td>
@@ -34,7 +34,13 @@
                     @if($e->projects->count() > 0)
                         <div class="project-links mt-2">
                             @foreach($e->projects as $project)
-                                <a href="{{ route('projects') }}#project-{{ $project->id }}">{{ $project->name }}</a>
+                                @php
+                                    $projectFullName = (string) $project->name;
+                                    $projectLinkLabel = \Illuminate\Support\Str::words($projectFullName, 4, '…');
+                                @endphp
+                                <a href="{{ route('projects') }}#project-{{ $project->id }}" title="{{ $projectFullName }}" aria-label="{{ $projectFullName }}">
+                                    <i class="fa-solid fa-link me-1" aria-hidden="true"></i>{{ $projectLinkLabel }}
+                                </a>
                             @endforeach
                         </div>
                     @endif
@@ -42,8 +48,12 @@
                     @if($e->videos->count() > 0)
                         <div class="project-links mt-2">
                             @foreach($e->videos as $video)
-                                <a href="{{ route('video') }}#video-{{ $video->id }}">
-                                    <i class="fa-solid fa-video me-1" aria-hidden="true"></i>{{ $video->name }}
+                                @php
+                                    $videoFullName = (string) $video->name;
+                                    $videoLinkLabel = \Illuminate\Support\Str::words($videoFullName, 4, '…');
+                                @endphp
+                                <a href="{{ route('video') }}#video-{{ $video->id }}" title="{{ $videoFullName }}" aria-label="{{ $videoFullName }}">
+                                    <i class="fa-solid fa-video me-1" aria-hidden="true"></i>{{ $videoLinkLabel }}
                                 </a>
                             @endforeach
                         </div>

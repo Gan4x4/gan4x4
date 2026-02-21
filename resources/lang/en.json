@@ -1,5 +1,6 @@
 { 
     "title" : "Anton Ganichev | Computer Vision Engineer",
     "description" : "Computer Vision Engineer and Software Developer",
-    "meta" : "Computer vision, Python/PyTorch, C++/STL, Java/Android, PHP, software development"
+    "meta" : "Computer vision, Python/PyTorch, C++/STL, Java/Android, PHP, software development",
+    "present" : "present"
 }

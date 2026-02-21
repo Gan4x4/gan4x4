@@ -13,9 +13,8 @@
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Organization</th>
                     <th>Position (EN)</th>
-                    <th>Position (RU)</th>
-                    <th>Years</th>
                     <th></th>
                 </tr>
             </thead>
@@ -23,9 +22,8 @@
                 @foreach($experiences as $experience)
                     <tr>
                         <td>{{ $experience->id }}</td>
+                        <td>{{ $experience->getAttributes()['name_en'] ?? '' }}</td>
                         <td>{{ $experience->getAttributes()['position_en'] ?? '' }}</td>
-                        <td>{{ $experience->getAttributes()['position_ru'] ?? '' }}</td>
-                        <td>{{ $experience->start }} @if ($experience->start != $experience->end) - {{ $experience->end ?? 'н.в.' }} @endif</td>
                         <td class="text-end">
                             <a href="{{ route('admin.experiences.edit', [$experience->id]) }}">Edit</a>
                         </td>
