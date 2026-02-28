@@ -27,7 +27,7 @@ body {
 }
 
 .site-main {
-  padding: 12px 0 48px;
+  padding: 12px 0 8px;
 }
 
 p, li {
@@ -45,6 +45,18 @@ a[href]:hover {
   color: #4f95ff;
 }
 
+.md-links-soft a[href] {
+  color: var(--ink-soft);
+  text-decoration: underline;
+  text-decoration-color: rgba(31, 45, 48, 0.35);
+  text-underline-offset: 2px;
+}
+
+.md-links-soft a[href]:hover {
+  color: var(--ink);
+  text-decoration-color: rgba(15, 28, 31, 0.55);
+}
+
 .navbar {
   background: rgba(15, 28, 31, 0.94) !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -55,6 +67,12 @@ a[href]:hover {
   font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Times New Roman", serif;
   font-weight: 700;
   letter-spacing: 0.4px;
+}
+
+.navbar-brand .brand-section {
+  font-size: 0.92em;
+  font-weight: 500;
+  opacity: 0.86;
 }
 
 .navbar .nav-link {
@@ -80,9 +98,21 @@ a[href]:hover {
 }
 
 .profile-photo {
-  max-width: 180px;
+  max-width: 234px;
+  margin-bottom: 22px;
   box-shadow: 0 16px 35px rgba(15, 28, 31, 0.2);
 }
+
+.profile-card ul {
+  margin-left: 0;
+  padding-left: 0;
+  list-style-position: inside;
+}
+
+.profile-card li {
+  padding-left: 0.2rem;
+}
+
 
 .name {
   font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Times New Roman", serif;
@@ -175,6 +205,82 @@ a[href]:hover {
   font-weight: 600;
 }
 
+.site-footer {
+  margin-top: 0;
+  border-top: 1px solid rgba(15, 28, 31, 0.12);
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.site-footer-inner {
+  padding: 8px 0 16px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-meta,
+.footer-links-block {
+  font-size: 0.92rem;
+}
+
+.footer-copy {
+  font-weight: 600;
+}
+
+.footer-role {
+  color: var(--muted);
+}
+
+.footer-links-group {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.footer-links-block {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
+}
+
+.footer-links-block a {
+  display: inline-flex;
+  align-items: center;
+}
+
+.footer-link-icon {
+  font-size: 0.82rem;
+  opacity: 0.9;
+}
+
+.icon_Istina {
+  font-size: 0.9rem;
+  color: #5fa7ff;
+}
+
+.footer-link-label {
+  margin-left: 0.8ch;
+}
+
+.footer-title {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+@media (min-width: 769px) {
+  .site-footer-inner {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .footer-links-group {
+    grid-template-columns: 1fr;
+    justify-items: end;
+  }
+}
+
 .intro-text {
   margin-top: 18px;
 }
@@ -221,6 +327,12 @@ td:first-child {
   display: inline-block;
 }
 
+.experience-logo {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+}
+
 @keyframes riseIn {
   from {
     opacity: 0;
@@ -237,10 +349,89 @@ td:first-child {
     padding-top: 56px;
   }
 
+  .navbar .container-fluid {
+    justify-content: flex-start;
+  }
+
+  .navbar-brand {
+    margin-right: 0;
+  }
+
+  .navbar-social {
+    order: 2;
+    margin-left: auto;
+  }
+
+  .navbar .navbar-toggler {
+    order: 3;
+    margin-left: 8px;
+  }
+
+  .navbar .navbar-collapse {
+    order: 4;
+    flex-basis: 100%;
+  }
+
+  .navbar-brand {
+    max-width: calc(100vw - 132px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .is-public .page-title {
+    display: none;
+  }
+
+  .navbar .nav-link {
+    min-width: 40px;
+    min-height: 36px;
+  }
+
+  .navbar-social .nav-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .site-main .table.project p a[href],
+  .site-main .table.project li a[href],
+  .site-main .project p a[href],
+  .site-main .project li a[href],
+  .site-main .video p a[href],
+  .site-main .video li a[href] {
+    display: inline-flex;
+    align-items: center;
+    min-width: 40px;
+    min-height: 36px;
+    line-height: 1.4;
+  }
+
+  .project-links a {
+    min-width: 40px;
+    min-height: 36px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+
+  .table.project td:first-child a[href],
+  .project-years a[href],
+  .video .float-start a[href] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 90px;
+    min-height: 36px;
+  }
+
   .profile-photo {
     float: none !important;
     display: block;
-    margin: 0 auto 16px;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 0 16px;
   }
 
   .profile-links .nav-link {

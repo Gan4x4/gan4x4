@@ -1,24 +1,53 @@
   
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark mb-4" aria-label="Primary">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{{ route('home')}}">Gan4x4</a>
+        @php($isAdmin = request()->is('admin') || request()->is('admin/*'))
+        @php($routeName = request()->route()?->getName())
+        @if($isAdmin)
+            @php($menuItems = [
+                'admin.index' => 'Admin',
+                'admin.projects.index' => 'Projects',
+                'admin.experiences.index' => 'Experience',
+                'admin.videos.index' => 'Videos',
+            ])
+            @php($selected = 'admin.index')
+            @if(str_starts_with((string) $routeName, 'admin.projects.'))
+                @php($selected = 'admin.projects.index')
+            @elseif(str_starts_with((string) $routeName, 'admin.experiences.'))
+                @php($selected = 'admin.experiences.index')
+            @elseif(str_starts_with((string) $routeName, 'admin.videos.'))
+                @php($selected = 'admin.videos.index')
+            @endif
+            @php($mobileSectionTitle = $menuItems[$selected] ?? 'Admin')
+        @else
+            @php($menuItems = __('menu'))
+            @php($pathKey = request()->segment(1) ?? '')
+            @php($selected = array_key_exists((string) $routeName, $menuItems) ? $routeName : $pathKey)
+            @php($mobileSectionTitle = ($selected && $selected !== 'home' && array_key_exists($selected, $menuItems)) ? $menuItems[$selected] : null)
+        @endif
+
+        <a class="navbar-brand" href="{{ route('home') }}">
+            <span>Gan4x4</span>
+            @if($mobileSectionTitle)
+                <span class="brand-section d-inline d-md-none"> / {{ $mobileSectionTitle }}</span>
+            @endif
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button> 
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">       
 
-                @php($selected = substr(request()->getPathInfo(),1))
-                @foreach ( __('menu') as $key => $val)
+                @foreach($menuItems as $key => $val)
 
-                    <li class="nav-item">
-                        <a class="nav-link {{  $key == $selected  ? 'active' : '' }}" href="{{ route($key) }}"> {{ $val }}</a>
+                    <li class="nav-item"> 
+                        <a class="nav-link {{ $key == $selected ? 'active' : '' }}" href="{{ route($key) }}">{{ $val }}</a>
                     </li>
                 @endforeach
                 
                 <li class="nav-item">                    
                     @php( $switch_locale = app()->getLocale() == 'ru' ? 'en' : 'ru' )    
-                    <a class="nav-link" href="{{ route($switch_locale) }}"> {{ $switch_locale }}</a>
+                    <a class="nav-link" href="{{ route($switch_locale) }}">{{ $switch_locale }}</a>
                 </li>
 
             </ul>

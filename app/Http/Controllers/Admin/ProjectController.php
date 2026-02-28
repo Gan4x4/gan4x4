@@ -55,7 +55,7 @@ class ProjectController extends Controller
         $project->fill($this->payload($request, $project));
         $project->save();
 
-        return redirect()->route('admin.projects.edit', [$project->id]);
+        return redirect()->route('admin.projects.index');
     }
 
     public function destroy(Project $project)
@@ -81,7 +81,7 @@ class ProjectController extends Controller
         if (array_key_exists('experience_id', $data) && $data['experience_id'] === '') {
             $data['experience_id'] = null;
         }
-        $data['links'] = $this->normalizeLinks($request->input('links'));
+        $data['links'] = $this->normalizeLinks($request);
 
         if ($request->hasFile('logo_file')) {
             $request->validate([
@@ -98,45 +98,52 @@ class ProjectController extends Controller
         return $data;
     }
 
-    private function normalizeLinks($rawLinks): ?array
+    private function normalizeLinks(Request $request): ?array
     {
-        if ($rawLinks === null) {
+        $urlItems = $request->input('links_url', []);
+        $ruItems = $request->input('links_ru', []);
+        $enItems = $request->input('links_en', []);
+
+        if (!is_array($urlItems)) {
+            $urlItems = [];
+        }
+        if (!is_array($ruItems)) {
+            $ruItems = [];
+        }
+        if (!is_array($enItems)) {
+            $enItems = [];
+        }
+
+        $count = max(count($urlItems), count($ruItems), count($enItems));
+        if ($count === 0) {
             return null;
-        }
+        }        
 
-        if (is_array($rawLinks)) {
-            return $rawLinks;
-        }
+        $normalized = [];
+        for ($i = 0; $i < $count; $i++) {
+            $url = trim((string) ($urlItems[$i] ?? ''));
+            $ruLabel = trim((string) ($ruItems[$i] ?? ''));
+            $enLabel = trim((string) ($enItems[$i] ?? ''));
 
-        $rawLinks = trim((string) $rawLinks);
-        if ($rawLinks === '') {
-            return null;
-        }
+            if ($url === '' && $ruLabel === '' && $enLabel === '') {
+                continue;
+            }
 
-        $decoded = json_decode($rawLinks, true);
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw ValidationException::withMessages([
-                'links' => 'Links must be a valid JSON array.',
-            ]);
-        }
-
-        // Backward compatibility: DB can contain a JSON-encoded string.
-        if (is_string($decoded)) {
-            $decodedAgain = json_decode($decoded, true);
-            if (json_last_error() !== JSON_ERROR_NONE) {
+            if ($url === '') {
                 throw ValidationException::withMessages([
-                    'links' => 'Links must be a JSON array of [url, ru_label, en_label].',
+                    'links_url' => 'Link URL is required for each non-empty link row.',
                 ]);
             }
-            $decoded = $decodedAgain;
+
+            if (!filter_var($url, FILTER_VALIDATE_URL)) {
+                throw ValidationException::withMessages([
+                    'links_url' => "Invalid URL in links row " . ($i + 1) . ".",
+                ]);
+            }
+
+            $normalized[] = [$url, $ruLabel, $enLabel];
         }
 
-        if (!is_array($decoded)) {
-            throw ValidationException::withMessages([
-                'links' => 'Links must be a JSON array of [url, ru_label, en_label].',
-            ]);
-        }
-
-        return $decoded;
+        return $normalized === [] ? null : $normalized;
     }
 }

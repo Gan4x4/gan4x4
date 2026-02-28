@@ -9,22 +9,22 @@
             <article id="project-{{ $p->id }}" class="row project card-stack" itemscope itemtype="https://schema.org/CreativeWork">
                 <div class="col"> 
                     <div class="float-start text-center pe-4 project-years">
-                        <a href="{{  $p->url ? $p->url : "#" }}" target="_blank">
+                        <a href="{{  $p->url ? $p->url : "#" }}" target="_blank" rel="noopener noreferrer" title="{{ $p->name }}" aria-label="{{ $p->name }}">
                             <img class="img-sm" src="{{ $p->logo_url }}" alt="{{ $p->name }}">
                         </a>
                         <br>
                         {{ $p->start }}
 
                         @if ($p->start != $p->end )
-                             - {{ $p->end ?? 'н.в.' }} 
+                             - {{ $p->end ?? __('present') }} 
                         @endif
                      </div>
 
                     <b itemprop="name">{{ $p->name }}</b>
                         <br>
-                        <p itemprop="description">
+                        <div class="md-links-soft" itemprop="description">
                             {!! $p->description !!}
-                        </p>
+                        </div>
 
                         @if (is_array($p->links) && count($p->links) > 0) 
                             <div class="project-links">
@@ -49,5 +49,6 @@
             </article>
         @endforeach
 
+    </div>
     
 @endsection

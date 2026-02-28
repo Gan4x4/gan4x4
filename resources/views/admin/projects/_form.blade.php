@@ -64,25 +64,139 @@
 </div>
 
 <div class="form-group mb-3">
-    <label for="links">Links (JSON array)</label>
+    <label>Links</label>
     @php
-        $linksForForm = old('links');
-        if ($linksForForm === null) {
-            $rawLinks = $project->getAttributes()['links'] ?? '';
-            if ($rawLinks === '') {
-                $linksForForm = '';
-            } else {
-                $decodedLinks = json_decode($rawLinks, true);
-                if (json_last_error() === JSON_ERROR_NONE && is_string($decodedLinks)) {
-                    $decodedLinks = json_decode($decodedLinks, true);
+        $linksRows = [];
+        $oldUrls = old('links_url');
+        $oldRu = old('links_ru');
+        $oldEn = old('links_en');
+
+        if (is_array($oldUrls) || is_array($oldRu) || is_array($oldEn)) {
+            $oldUrls = is_array($oldUrls) ? $oldUrls : [];
+            $oldRu = is_array($oldRu) ? $oldRu : [];
+            $oldEn = is_array($oldEn) ? $oldEn : [];
+            $count = max(count($oldUrls), count($oldRu), count($oldEn));
+            for ($i = 0; $i < $count; $i++) {
+                $linksRows[] = [
+                    'url' => (string) ($oldUrls[$i] ?? ''),
+                    'ru' => (string) ($oldRu[$i] ?? ''),
+                    'en' => (string) ($oldEn[$i] ?? ''),
+                ];
+            }
+        } else {
+            $rawLinks = $project->getAttributes()['links'] ?? null;
+            $decodedLinks = [];
+            if (is_string($rawLinks) && trim($rawLinks) !== '') {
+                $decoded = json_decode($rawLinks, true);
+                if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                    $decodedLinks = $decoded;
                 }
-                if (is_array($decodedLinks)) {
-                    $linksForForm = json_encode($decodedLinks, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-                } else {
-                    $linksForForm = $rawLinks;
+            } elseif (is_array($rawLinks)) {
+                $decodedLinks = $rawLinks;
+            }
+
+            foreach ($decodedLinks as $row) {
+                if (!is_array($row)) {
+                    continue;
                 }
+                $linksRows[] = [
+                    'url' => (string) ($row[0] ?? ''),
+                    'ru' => (string) ($row[1] ?? ''),
+                    'en' => (string) ($row[2] ?? ''),
+                ];
             }
         }
+
+        if ($linksRows === []) {
+            $linksRows[] = ['url' => '', 'ru' => '', 'en' => ''];
+        }
     @endphp
-    <textarea class="form-control" name="links" rows="4">{{ $linksForForm ?? old('links', '') }}</textarea>
+
+    <div id="project-links-editor" class="d-grid gap-2">
+        @foreach($linksRows as $row)
+            <div class="row g-2 align-items-end" data-link-row>
+                <div class="col-md-5">
+                    <label class="form-label">URL</label>
+                    <input type="text" class="form-control" name="links_url[]" value="{{ $row['url'] }}" placeholder="https://example.com">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">RU name</label>
+                    <input type="text" class="form-control" name="links_ru[]" value="{{ $row['ru'] }}" placeholder="Название (RU)">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">EN name</label>
+                    <input type="text" class="form-control" name="links_en[]" value="{{ $row['en'] }}" placeholder="Name (EN)">
+                </div>
+                <div class="col-md-1 d-flex gap-1">
+                    <button type="button" class="btn btn-outline-success btn-sm" data-link-add title="Add row">+</button>
+                    <button type="button" class="btn btn-outline-danger btn-sm" data-link-remove title="Remove row">-</button>
+                </div>
+            </div>
+        @endforeach
+    </div>
+    @error('links_url')
+        <div class="text-danger mt-1">{{ $message }}</div>
+    @enderror
+    <small class="form-text text-muted">Use + / - to manage rows. Data will be saved as JSON.</small>
 </div>
+
+<template id="project-link-row-template">
+    <div class="row g-2 align-items-end" data-link-row>
+        <div class="col-md-5">
+            <label class="form-label">URL</label>
+            <input type="text" class="form-control" name="links_url[]" placeholder="https://example.com">
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">RU name</label>
+            <input type="text" class="form-control" name="links_ru[]" placeholder="Название (RU)">
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">EN name</label>
+            <input type="text" class="form-control" name="links_en[]" placeholder="Name (EN)">
+        </div>
+        <div class="col-md-1 d-flex gap-1">
+            <button type="button" class="btn btn-outline-success btn-sm" data-link-add title="Add row">+</button>
+            <button type="button" class="btn btn-outline-danger btn-sm" data-link-remove title="Remove row">-</button>
+        </div>
+    </div>
+</template>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const editor = document.getElementById('project-links-editor');
+    const template = document.getElementById('project-link-row-template');
+    if (!editor || !template || editor.dataset.bound === '1') {
+        return;
+    }
+    editor.dataset.bound = '1';
+
+    editor.addEventListener('click', function (event) {
+        const addButton = event.target.closest('[data-link-add]');
+        if (addButton) {
+            event.preventDefault();
+            const row = template.content.firstElementChild.cloneNode(true);
+            editor.appendChild(row);
+            return;
+        }
+
+        const removeButton = event.target.closest('[data-link-remove]');
+        if (!removeButton) {
+            return;
+        }
+        event.preventDefault();
+        const row = removeButton.closest('[data-link-row]');
+        if (!row) {
+            return;
+        }
+
+        const rows = editor.querySelectorAll('[data-link-row]');
+        if (rows.length <= 1) {
+            row.querySelectorAll('input').forEach((input) => {
+                input.value = '';
+            });
+            return;
+        }
+        row.remove();
+    });
+});
+</script>

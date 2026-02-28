@@ -50,7 +50,7 @@ class VideoController extends Controller
         $video->fill($this->withRequiredDefaults($this->payload($request), $video));
         $video->save();
 
-        return redirect()->route('admin.videos.edit', [$video->id]);
+        return redirect()->route('admin.videos.index');
     }
 
     public function destroy(Video $video)

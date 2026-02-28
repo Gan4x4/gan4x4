@@ -8,8 +8,8 @@
     
         <tr>
             <td class="text-center">
-                <a href="https://www.mati-rgtu.org/">
-                    <img class="img-sm" src="design/work/mati.png" target="_blank">
+                <a href="https://www.mati-rgtu.org/" target="_blank" rel="noopener noreferrer">
+                    <img class="img-sm" src="design/work/mati.png">
                 </a>
                 <br>
                 2000 - 2003
@@ -28,7 +28,7 @@
         
         <tr>
             <td class="text-center">
-                <a href="https://www.mati-rgtu.org/" target="_blank">
+                <a href="https://www.mati-rgtu.org/" target="_blank" rel="noopener noreferrer">
                     <img class="img-sm" src="design/work/mati.png">
                 </a>
                 <br>
@@ -45,8 +45,8 @@
         
         <tr>
             <td class="text-center">
-                <a href="https://www.mati-rgtu.org/">
-                    <img class="img-sm" src="design/work/mati.png" target="_blank">
+                <a href="https://www.mati-rgtu.org/" target="_blank" rel="noopener noreferrer">
+                    <img class="img-sm" src="design/work/mati.png">
                 </a>
                 <br>
                 1994 - 1998

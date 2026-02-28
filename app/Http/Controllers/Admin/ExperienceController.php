@@ -41,7 +41,7 @@ class ExperienceController extends Controller
         $experience->fill($this->withRequiredDefaults($this->payload($request, $experience), $experience));
         $experience->save();
 
-        return redirect()->route('admin.experiences.edit', [$experience->id]);
+        return redirect()->route('admin.experiences.index');
     }
 
     public function destroy(Experience $experience)

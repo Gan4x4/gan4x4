@@ -39,7 +39,7 @@
     @yield('head')
     @yield('structured_data')
     </head>
-    <body class="page">
+    <body class="page {{ $isAdmin ? 'is-admin' : 'is-public' }}">
 
      
       <header>
@@ -51,14 +51,33 @@
           @yield('content')
 
       </main>
-        
-      <!--
-    <footer class="mt-auto">
-    <p>Cover template for <a href="https://getbootstrap.com/" class="text-white">Bootstrap</a>, by <a href="https://twitter.com/mdo" class="text-white">@mdo</a>.</p>
-  </footer>
-     -->
-        
-        
+
+      @if(!$isAdmin)
+      <footer class="site-footer">
+          <div class="container site-footer-inner">
+              <div class="footer-meta">
+                  <p class="footer-copy mb-1">&copy; {{ now()->year }} Anton Ganichev</p>
+                  <p class="footer-role mb-0">{{ __('footer_role') }}</p>
+              </div>
+              <div class="footer-links-group">
+                  <div class="footer-links-block">
+                      <span class="footer-title">{{ __('footer_navigation') }}</span>
+                      <a href="{{ route('projects') }}">{{ __('menu.projects') }}</a>
+                      <a href="{{ route('experience') }}">{{ __('menu.experience') }}</a>
+                      <a href="{{ route('video') }}">{{ __('menu.video') }}</a>
+                  </div>
+                  <div class="footer-links-block">
+                      <span class="footer-title">{{ __('footer_profiles') }}</span>
+                      <a href="https://github.com/Gan4x4/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github footer-link-icon" aria-hidden="true"></i><span class="footer-link-label">GitHub</span></a>
+                      <a href="https://stackoverflow.com/users/6656081" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-stack-overflow footer-link-icon" aria-hidden="true"></i><span class="footer-link-label">Stack Overflow</span></a>
+                      <a href="https://bitbucket.org/Gan4x4/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-bitbucket footer-link-icon" aria-hidden="true"></i><span class="footer-link-label">Bitbucket</span></a>
+                      <a href="https://istina.msu.ru/workers/393403986/" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-graduation-cap footer-link-icon icon_Istina" aria-hidden="true"></i><span class="footer-link-label">Istina</span></a>
+                      <a href="mailto:gan4x4@gmail.com"><i class="fa-solid fa-envelope footer-link-icon" aria-hidden="true"></i><span class="footer-link-label">gan4x4@gmail.com</span></a>
+                  </div>
+              </div>
+          </div>
+      </footer>
+      @endif
 
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     </body>

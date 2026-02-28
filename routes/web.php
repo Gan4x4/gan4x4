@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
 use App\Http\Controllers\Admin\ExperienceController as AdminExperienceController;
 use App\Http\Controllers\Admin\VideoController as AdminVideoController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Route;
@@ -105,15 +106,40 @@ Route::get('/sitemap.xml', function () {
     return response($xml, 200)->header('Content-Type', 'application/xml');
 })->name('sitemap');
 
+$resolveLocaleRedirectTarget = function (Request $request): string {
+    $fallback = route('home');
+    $referer = (string) $request->headers->get('referer', '');
 
-Route::get('/en', function () {
+    if ($referer === '') {
+        return $fallback;
+    }
+
+    $parts = parse_url($referer);
+    if (!is_array($parts)) {
+        return $fallback;
+    }
+
+    $host = $parts['host'] ?? null;
+    if ($host !== null && !hash_equals((string) $request->getHost(), (string) $host)) {
+        return $fallback;
+    }
+
+    $path = $parts['path'] ?? '';
+    if (in_array($path, ['/en', '/ru'], true)) {
+        return $fallback;
+    }
+
+    return $referer;
+};
+
+Route::get('/en', function (Request $request) use ($resolveLocaleRedirectTarget) {
     App::setLocale('en');
     session()->put('locale', 'en');
-    return redirect()->back();
+    return redirect()->to($resolveLocaleRedirectTarget($request));
 })->name('en');
 
-Route::get('/ru', function () {
+Route::get('/ru', function (Request $request) use ($resolveLocaleRedirectTarget) {
     App::setLocale('ru');
     session()->put('locale', 'ru');
-    return redirect()->back();
+    return redirect()->to($resolveLocaleRedirectTarget($request));
 })->name('ru');
