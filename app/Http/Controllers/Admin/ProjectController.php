@@ -17,6 +17,7 @@ class ProjectController extends Controller
     {
         $projects = Project::query()
             ->with('experience')
+            ->orderByRaw('CASE WHEN "end" IS NULL THEN 0 ELSE 1 END ASC')
             ->orderByRaw('COALESCE("end", "start") DESC')
             ->orderByDesc('start')
             ->get();

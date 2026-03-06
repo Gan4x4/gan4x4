@@ -38,6 +38,7 @@ class Experience extends EnhancedModel
     public function projects()
     {
         return $this->hasMany(Project::class)
+            ->orderByRaw('CASE WHEN "end" IS NULL THEN 0 ELSE 1 END ASC')
             ->orderByRaw('COALESCE("end", "start") DESC')
             ->orderByDesc('start');
     }
