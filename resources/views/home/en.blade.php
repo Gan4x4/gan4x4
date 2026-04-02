@@ -77,6 +77,8 @@
                 English: B2 (Upper-Intermediate), spoken.
                 <br>
                 Contact: gan4x4@gmail.com.
+                <br>
+                <a href="{{ asset('storage/CV_Anton_Ganichev.pdf') }}" download>Download CV (PDF)</a>
             </p>
         </div>
     

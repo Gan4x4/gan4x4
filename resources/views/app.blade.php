@@ -68,11 +68,13 @@
                   </div>
                   <div class="footer-links-block">
                       <span class="footer-title">{{ __('footer_profiles') }}</span>
-                      <a href="https://github.com/Gan4x4/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github footer-link-icon" aria-hidden="true"></i><span class="footer-link-label">GitHub</span></a>
-                      <a href="https://stackoverflow.com/users/6656081" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-stack-overflow footer-link-icon" aria-hidden="true"></i><span class="footer-link-label">Stack Overflow</span></a>
-                      <a href="https://bitbucket.org/Gan4x4/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-bitbucket footer-link-icon" aria-hidden="true"></i><span class="footer-link-label">Bitbucket</span></a>
-                      <a href="https://istina.msu.ru/workers/393403986/" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-graduation-cap footer-link-icon icon_Istina" aria-hidden="true"></i><span class="footer-link-label">Istina</span></a>
-                      <a href="mailto:gan4x4@gmail.com"><i class="fa-solid fa-envelope footer-link-icon" aria-hidden="true"></i><span class="footer-link-label">gan4x4@gmail.com</span></a>
+                      <a href="https://github.com/Gan4x4/" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile"><i class="fa-brands fa-github footer-link-icon" aria-hidden="true"></i><span class="footer-link-label">GitHub</span></a>
+                      <a href="https://stackoverflow.com/users/6656081" target="_blank" rel="noopener noreferrer" aria-label="Stack Overflow profile"><i class="fa-brands fa-stack-overflow footer-link-icon" aria-hidden="true"></i><span class="footer-link-label">Stack Overflow</span></a>
+                      <a href="https://bitbucket.org/Gan4x4/" target="_blank" rel="noopener noreferrer" aria-label="Bitbucket profile"><i class="fa-brands fa-bitbucket footer-link-icon" aria-hidden="true"></i><span class="footer-link-label">Bitbucket</span></a>
+                      <a href="https://www.linkedin.com/in/anton-ganichev-46528640/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile"><i class="fa-brands fa-linkedin footer-link-icon" aria-hidden="true"></i><span class="footer-link-label">{{ __('footer_linkedin') }}</span></a>
+                      <a href="https://istina.msu.ru/workers/393403986/" target="_blank" rel="noopener noreferrer" aria-label="Istina profile"><i class="fa-solid fa-graduation-cap footer-link-icon icon_Istina" aria-hidden="true"></i><span class="footer-link-label">Istina</span></a>
+                      <a href="mailto:gan4x4@gmail.com" aria-label="Email address"><i class="fa-solid fa-envelope footer-link-icon" aria-hidden="true"></i><span class="footer-link-label">gan4x4@gmail.com</span></a>
+                      <a href="{{ asset('storage/CV_Anton_Ganichev.pdf') }}" download aria-label="Download Anton Ganichev CV" title="Download Anton Ganichev CV"><i class="fa-solid fa-file-arrow-down footer-link-icon" aria-hidden="true"></i><span class="footer-link-label">{{ __('footer_cv') }}</span></a>
                   </div>
               </div>
           </div>

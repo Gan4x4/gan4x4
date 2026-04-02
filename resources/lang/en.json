@@ -5,5 +5,7 @@
     "present" : "present",
     "footer_role" : "Computer Vision Engineer & AI Consultant",
     "footer_navigation" : "Navigation",
-    "footer_profiles" : "Profiles"
+    "footer_profiles" : "Profiles",
+    "footer_linkedin" : "LinkedIn",
+    "footer_cv" : "CV (PDF)"
 }
