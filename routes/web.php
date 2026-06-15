@@ -3,6 +3,7 @@
 use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\VideoController;
+use App\Http\Controllers\CvController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
 use App\Http\Controllers\Admin\ExperienceController as AdminExperienceController;
@@ -77,6 +78,8 @@ Route::get(
 Route::get('/contacts', function () {
     return view('contacts');
 })->name('contacts');
+
+Route::get('/cv/download', [CvController::class, 'download'])->name('cv.download');
 
 Route::get('/sitemap.xml', function () {
     $urls = [

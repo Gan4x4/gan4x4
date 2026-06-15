@@ -1,0 +1,150 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+APP_ROOT="${APP_ROOT:-/var/www/gan4x4}"
+IMAGE_NAME="${IMAGE_NAME:-gan4x4-app:latest}"
+CONTAINER_NAME="${CONTAINER_NAME:-gan4x4-app}"
+FPM_PORT="${FPM_PORT:-9001}"
+APP_PORT="${APP_PORT:-8443}"
+BASE_URL="${BASE_URL:-https://127.0.0.1:${APP_PORT}}"
+ENV_FILE="${ENV_FILE:-${APP_ROOT}/.env}"
+RUN_TESTS="${RUN_TESTS:-auto}"
+OWNER="${SUDO_USER:-$(id -un)}"
+OWNER_UID="$(id -u "${OWNER}")"
+OWNER_GID="$(id -g "${OWNER}")"
+DOCKER_CMD=()
+
+fail() {
+  echo "ERROR: $*" >&2
+  exit 1
+}
+
+step() {
+  echo "[$1/10] $2"
+}
+
+pick_docker() {
+  command -v docker >/dev/null 2>&1 || fail "docker command not found"
+
+  if docker info >/dev/null 2>&1; then
+    DOCKER_CMD=(docker)
+    return
+  fi
+
+  command -v sudo >/dev/null 2>&1 || fail "docker requires elevated privileges, but sudo is not available"
+
+  echo "Docker requires elevated privileges; requesting sudo once."
+  sudo -v
+  sudo docker info >/dev/null 2>&1 || fail "docker is not accessible through sudo"
+  DOCKER_CMD=(sudo docker)
+}
+
+docker_cmd() {
+  "${DOCKER_CMD[@]}" "$@"
+}
+
+preflight() {
+  [ -d "${APP_ROOT}" ] || fail "app root not found: ${APP_ROOT}"
+  cd "${APP_ROOT}"
+
+  command -v git >/dev/null 2>&1 || fail "git command not found"
+  command -v curl >/dev/null 2>&1 || fail "curl command not found"
+  [ -f "${ENV_FILE}" ] || fail "ENV file not found: ${ENV_FILE}"
+  [ -f Dockerfile ] || fail "Dockerfile not found in ${APP_ROOT}"
+  [ -f composer.json ] || fail "composer.json not found in ${APP_ROOT}"
+  [ -f database/database.sqlite ] || fail "SQLite database not found: database/database.sqlite"
+
+  if [ -d .git ]; then
+    if ! git diff --quiet -- composer.lock Dockerfile sync; then
+      echo "Warning: deploy-critical tracked files have uncommitted local changes."
+    fi
+    echo "Git revision: $(git rev-parse --short HEAD)"
+  fi
+
+  pick_docker
+  echo "Docker command: ${DOCKER_CMD[*]}"
+}
+
+preflight
+
+step 1 "Preflight checks complete"
+
+step 2 "Build runtime image"
+docker_cmd build -t "${IMAGE_NAME}" .
+
+step 3 "Install PHP dependencies inside image"
+docker_cmd run --rm \
+  -u "${OWNER_UID}:${OWNER_GID}" \
+  -e COMPOSER_CACHE_DIR=/tmp/composer-cache \
+  -v "${APP_ROOT}:/var/www/html" \
+  -w /var/www/html \
+  --entrypoint composer \
+  "${IMAGE_NAME}" \
+  install --no-dev --optimize-autoloader --no-interaction --no-scripts --prefer-dist
+
+step 4 "Recreate app container"
+docker_cmd rm -f "${CONTAINER_NAME}" >/dev/null 2>&1 || true
+docker_cmd run -d \
+  --name "${CONTAINER_NAME}" \
+  --restart unless-stopped \
+  -p "127.0.0.1:${FPM_PORT}:9000" \
+  --env-file "${ENV_FILE}" \
+  -e DB_CONNECTION=sqlite \
+  -e DB_DATABASE=/var/www/html/database/database.sqlite \
+  -e CV_CHROME_BINARY=/usr/bin/chromium \
+  -e CV_CHROME_NO_SANDBOX=true \
+  -v "${APP_ROOT}:/var/www/html" \
+  "${IMAGE_NAME}"
+
+step 5 "Initialize Laravel"
+sleep 3
+docker_cmd exec "${CONTAINER_NAME}" php artisan optimize:clear
+docker_cmd exec "${CONTAINER_NAME}" php artisan migrate --force
+if docker_cmd exec "${CONTAINER_NAME}" test -L public/storage; then
+  echo "public/storage link already exists"
+else
+  docker_cmd exec "${CONTAINER_NAME}" php artisan storage:link
+fi
+docker_cmd exec "${CONTAINER_NAME}" php artisan config:cache
+
+step 6 "Verify Chromium and PDF text tools"
+docker_cmd exec "${CONTAINER_NAME}" sh -lc 'command -v chromium || command -v chromium-browser || command -v google-chrome'
+docker_cmd exec "${CONTAINER_NAME}" sh -lc 'command -v pdftotext'
+
+step 7 "Run application tests in container"
+if [ "${RUN_TESTS}" = "false" ]; then
+  echo "RUN_TESTS=false; skipping tests"
+elif docker_cmd exec "${CONTAINER_NAME}" php artisan list --raw | grep -qx 'test'; then
+  docker_cmd exec "${CONTAINER_NAME}" php artisan test
+else
+  echo "php artisan test is unavailable after --no-dev install; skipping PHPUnit on prod image"
+fi
+
+step 8 "Smoke-check pages"
+for path in / /projects /experience /video /cv/download; do
+  code="$(curl -k -s -o /dev/null -w "%{http_code}" "${BASE_URL}${path}" || true)"
+  echo "${path} -> ${code}"
+  if [ "${code}" != "200" ]; then
+    echo "Smoke check failed: ${BASE_URL}${path}"
+    exit 1
+  fi
+done
+
+step 9 "Browser-check CV download and PDF chapters"
+docker_cmd run --rm \
+  --network host \
+  --env-file "${ENV_FILE}" \
+  -e CV_VERIFY_BASE_URL="${BASE_URL}" \
+  -e CV_VERIFY_CHROME_BINARY=/usr/bin/chromium \
+  -v "${APP_ROOT}:/var/www/html:ro" \
+  -w /var/www/html \
+  --entrypoint php \
+  "${IMAGE_NAME}" \
+  scripts/docker/verify_cv_download.php
+
+step 10 "Verify generated CV PDF cache"
+docker_cmd exec "${CONTAINER_NAME}" sh -lc 'ls -lh storage/app/public/cv/*.pdf'
+
+echo "DONE"
+echo "App: ${BASE_URL}"
+echo "CV:  ${BASE_URL}/cv/download"

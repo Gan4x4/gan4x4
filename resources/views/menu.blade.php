@@ -57,7 +57,7 @@
             
             <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
                 <li class="nav-item col-6 col-md-auto">
-                    <a href="{{ asset('storage/CV_Anton_Ganichev.pdf') }}" class='nav-link p-2' download aria-label="Download Anton Ganichev CV" title="Download Anton Ganichev CV">
+                    <a href="{{ route('cv.download') }}" class='nav-link p-2' download aria-label="Download Anton Ganichev CV" title="Download Anton Ganichev CV">
                         <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i>
                     </a>
                 </li>

@@ -76,7 +76,7 @@
                 Английский язык: уровень B2 (Upper-Intermediate), разговорный.
                 Контакты: <a href="mailto:gan4x4@gmail.com">gan4x4@gmail.com</a>
                 <br>
-                <a href="{{ asset('storage/CV_Anton_Ganichev.pdf') }}" download>Скачать CV (PDF)</a>
+                <a href="{{ route('cv.download') }}" download>Скачать CV (PDF)</a>
             </p>
 
     </div>
