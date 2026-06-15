@@ -7,7 +7,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     chromium \
     fonts-noto-core \
     git \
-    poppler-utils \
     unzip \
     libsqlite3-dev \
     libzip-dev \

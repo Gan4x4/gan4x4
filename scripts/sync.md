@@ -1,6 +1,6 @@
 # How to sync this dev VPS with prod
 
-Project runs in Docker. Pull code first, then use one script for rebuild, dependency install, container restart, Laravel cache/migrations, Chromium and PDF text tool checks, tests when available, smoke checks, and CV PDF verification. The script uses plain `docker` when possible and asks for `sudo` only if Docker requires it.
+Project runs in Docker. Pull code first, then use one script for rebuild, dependency install, container restart, Laravel cache/migrations, Chromium check, tests when available, smoke checks, and generated CV cache verification. The script uses plain `docker` when possible and asks for `sudo` only if Docker requires it.
 
 ## Test on this VPS first
 
@@ -37,7 +37,7 @@ php artisan migrate --force
 php artisan config:cache
 php artisan test when available
 smoke checks for /, /projects, /experience, /video, /cv/download
-headless mobile browser check: open site, click CV download, read PDF, verify EN/RU chapters
+generated CV PDF cache check
 ```
 
 ## Optional DB sync

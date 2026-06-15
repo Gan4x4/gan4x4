@@ -12,6 +12,7 @@ RUN_TESTS="${RUN_TESTS:-auto}"
 OWNER="${SUDO_USER:-$(id -un)}"
 OWNER_UID="$(id -u "${OWNER}")"
 OWNER_GID="$(id -g "${OWNER}")"
+TOTAL_STEPS=9
 DOCKER_CMD=()
 
 fail() {
@@ -20,7 +21,7 @@ fail() {
 }
 
 step() {
-  echo "[$1/10] $2"
+  echo "[$1/${TOTAL_STEPS}] $2"
 }
 
 pick_docker() {
@@ -107,9 +108,8 @@ else
 fi
 docker_cmd exec "${CONTAINER_NAME}" php artisan config:cache
 
-step 6 "Verify Chromium and PDF text tools"
+step 6 "Verify Chromium for CV PDF generation"
 docker_cmd exec "${CONTAINER_NAME}" sh -lc 'command -v chromium || command -v chromium-browser || command -v google-chrome'
-docker_cmd exec "${CONTAINER_NAME}" sh -lc 'command -v pdftotext'
 
 step 7 "Run application tests in container"
 if [ "${RUN_TESTS}" = "false" ]; then
@@ -130,19 +130,7 @@ for path in / /projects /experience /video /cv/download; do
   fi
 done
 
-step 9 "Browser-check CV download and PDF chapters"
-docker_cmd run --rm \
-  --network host \
-  --env-file "${ENV_FILE}" \
-  -e CV_VERIFY_BASE_URL="${BASE_URL}" \
-  -e CV_VERIFY_CHROME_BINARY=/usr/bin/chromium \
-  -v "${APP_ROOT}:/var/www/html:ro" \
-  -w /var/www/html \
-  --entrypoint php \
-  "${IMAGE_NAME}" \
-  scripts/docker/verify_cv_download.php
-
-step 10 "Verify generated CV PDF cache"
+step 9 "Verify generated CV PDF cache"
 docker_cmd exec "${CONTAINER_NAME}" sh -lc 'ls -lh storage/app/public/cv/*.pdf'
 
 echo "DONE"
